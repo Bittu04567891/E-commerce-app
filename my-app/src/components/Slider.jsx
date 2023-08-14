@@ -1,5 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material"
+import { useState } from "react"
 import { styled } from "styled-components"
+import {sliderItems} from "../data"
 
 const Container=styled.div`
  width: 100%;
@@ -29,7 +31,8 @@ z-index:2 ;
 const Wrapper=styled.div`
    height:100%;
    display: flex;
-   transform: translateX(0vw);
+   transition: all 1.5s ease;
+   transform: translateX(${props=>props.slideIndex*-100}vw);
 
 
 `
@@ -44,11 +47,13 @@ height: 100vh;
 const ImgContainer=styled.div`
     height:100%;
     flex: 1;
+    background-color: transparent;
    
 
 `
 const Image=styled.img`
     height :80% ;
+    mix-blend-mode: darken;//used when we want image bg to be the pg bg
 
 `
 const InfoContainer=styled.div`
@@ -77,63 +82,39 @@ const Button=styled.button`
 
 `
 const Slider = () => {
+    const [slideIndex,setSlideIndex]=useState(0)
     const handleClick=(direction)=>{
-
+        if(direction==="left"){
+          setSlideIndex(slideIndex>0?slideIndex-1:2);
+        }
+        else {
+          setSlideIndex(slideIndex<2?slideIndex+1:0);
+        }
     };
   return (
    <Container>
     <Arrow direction="left" onClick={()=>handleClick("left")}>
     <ArrowLeftOutlined/>
     </Arrow>
-    <Wrapper>
-    <Slide bg="f5fafd">
+    <Wrapper slideIndex={slideIndex}>
+      {sliderItems.map((item)=>(
+    <Slide bg={item.bg} key={item.id}>
       <ImgContainer>
-      <Image src="https://i.ibb.co/yqS8CR1/Kannai-Nambathey-Actress-Aathmika-Silk-Saree-Photos-HD.jpg"/>
+      <Image src={item.img}/>
       </ImgContainer>
       <InfoContainer>
         <Title>
-          SUMMER SALE
+        {item.title}
         </Title>
         <Desc>
-        DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
+        {item.desc}
         </Desc>
         <Button>
           SHOW NOW
         </Button>
       </InfoContainer>
       </Slide>
-      <Slide bg="fcf1ed">
-      <ImgContainer>
-      <Image src="https://i.ibb.co/yqS8CR1/Kannai-Nambathey-Actress-Aathmika-Silk-Saree-Photos-HD.jpg"/>
-      </ImgContainer>
-      <InfoContainer>
-        <Title>
-          WINTER SALE
-        </Title>
-        <Desc>
-        DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
-        </Desc>
-        <Button>
-          SHOW NOW
-        </Button>
-      </InfoContainer>
-      </Slide>
-      <Slide bg="fbf0f4">
-      <ImgContainer>
-      <Image src="https://i.ibb.co/yqS8CR1/Kannai-Nambathey-Actress-Aathmika-Silk-Saree-Photos-HD.jpg"/>
-      </ImgContainer>
-      <InfoContainer>
-        <Title>
-          POPULAR SALE
-        </Title>
-        <Desc>
-        DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.
-        </Desc>
-        <Button>
-          SHOW NOW
-        </Button>
-      </InfoContainer>
-      </Slide>
+      ))}
     </Wrapper>
     <Arrow direction="right" onClick={()=>handleClick("right")}>
     <ArrowRightOutlined/>
