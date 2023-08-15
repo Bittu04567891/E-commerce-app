@@ -63,8 +63,8 @@ const Navbar = () => {
                 English
             </Language>
             <SearchContainer>
-                <Input/>
-               <Search style={{color:"gray",fontSize:16}}/>
+            <Input style={{ width: "150px", height: "20px", fontSize: "18px" }} />
+               <Search style={{color:"gray",fontSize:20}}/>
             </SearchContainer>
            </Left>
            <Center><Logo>PrismCart</Logo></Center>

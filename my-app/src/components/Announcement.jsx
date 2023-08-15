@@ -1,3 +1,4 @@
+import { CurrencyRupee } from "@mui/icons-material"
 import { styled } from "styled-components"
 
 const Container=styled.div`
@@ -13,7 +14,7 @@ font-weight: 500;
 const Announcement = () => {
   return (
     <Container>
-        Super Deal! Free Shipping on Orders over $50
+        Super Deal! Free Shipping on Orders over <CurrencyRupee style={{ fontSize: "15px" }} />500
     </Container>
   )
 }
