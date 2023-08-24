@@ -5,6 +5,9 @@ import Newsletter from "../components/Newsletter"
 import Footer from "../components/Footer"
 import { Add, CurrencyRupee, Remove } from "@mui/icons-material"
 import { mobile } from "../responsive"
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min"
+import { useEffect, useState } from "react"
+import { publicRequest } from "../requestMethods"
 
 const Container=styled.div`
     
@@ -117,34 +120,49 @@ const Button=styled.button`
 `
 
 const Product = () => {
+    const location=useLocation();
+    const id=location.pathname.split("/")[3];
+    const [product,setProduct]=useState({});
+  
+    useEffect(() => {
+        const getProduct = async () => {
+          try {
+            const res = await publicRequest.get("/products/find/" + id);
+            setProduct(res.data);
+          } catch(err){
+            console.error(err);
+          }
+        };
+        getProduct();
+      }, [id]); 
+     
   return (
     <Container>
    <Navbar/>
    <Announcement/>
    <Wrapper>
     <ImgContainer>
-    <Image src="https://m.media-amazon.com/images/I/81peIYei9RL._AC_UL600_FMwebp_QL65_.jpg"/>
+    <Image src={product.img}/>
     </ImgContainer>
     <InfoContainer>
-        <Title>Women's Blue Solid Regular Fit Full Length Denim Dungaree</Title>
-        <Desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quo dolores doloribus deserunt qui, accusantium natus aliquam molestiae exercitationem minima! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam tempora unde consequuntur aperiam, voluptatibus, corrupti quidem commodi iure velit suscipit similique necessitatibus dolorem dolorum illo odio laboriosam. Reprehenderit qui non beatae commodi fuga at ipsam obcaecati, tempora ratione quae esse voluptatibus provident sunt necessitatibus rerum id quisquam, eaque in nulla.</Desc>
-        <Price><CurrencyRupee style={{ fontSize: "15px" }}/>500</Price>
+        <Title>{product.title}</Title>
+        <Desc>{product.desc}</Desc>
+        <Price><CurrencyRupee style={{ fontSize: "15px" }}/>{product.price}</Price>
         <FilterContainer>
            <Filter>
             <FilterTitle>Colour</FilterTitle>
-            <FilterColor color="black"/>
-            <FilterColor color="darkblue"/>
-            <FilterColor color="gray"/>
-            </Filter> 
+            {product.color.map((c)=>(
+              <FilterColor color={c} key={c}/>
+            ))}
+           
+            </Filter>  
             <Filter>
                 <FilterTitle>Size</FilterTitle>
                 <FilterSize>
-                    <FilterSizeOption>XS</FilterSizeOption>
-                    <FilterSizeOption>S</FilterSizeOption>
-                    <FilterSizeOption>M</FilterSizeOption>
-                    <FilterSizeOption>L</FilterSizeOption>
-                    <FilterSizeOption>XL</FilterSizeOption>
-                    <FilterSizeOption>XXL</FilterSizeOption>
+                    {product.size.map((s)=>(
+              <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                    ))}
+                   
                    
                 </FilterSize>
             </Filter>
