@@ -1,3 +1,4 @@
+const User = require("../models/User");
 const {
   verifyToken,
   verifyTokenAndAuthorization,
