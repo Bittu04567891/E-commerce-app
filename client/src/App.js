@@ -17,10 +17,10 @@ const App = () => {
           <Home />
         </Route>
         <Route path="/E-commerce-app/products/:category">
-          <Product />
+          <ProductList />
         </Route>
         <Route path="/E-commerce-app/product/:id">
-          <ProductList />
+          <Product />
         </Route>
         <Route path="/E-commerce-app/cart">
           <Cart />

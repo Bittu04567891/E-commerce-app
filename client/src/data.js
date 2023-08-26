@@ -27,19 +27,19 @@ export const categories = [
     id: 1,
     img: "https://images.unsplash.com/photo-1563630423918-b58f07336ac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bWVuJTIwc2hpcnR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1000&q=60",
     title: "SHIRT STYLE!",
-    cat: "women",
+    cat: "man",
   },
   {
     id: 2,
     img: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d29tYW4lMjBiZWF1dGlmdWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
     title: "LOUNGE WEAR LOVE",
-    cat: "coat",
+    cat: "women",
   },
   {
     id: 3,
     img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amFja2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=1000&q=60",
     title: "LIGHT JACKETS",
-    cat: "jeans",
+    cat: "jacket",
   },
 ];
 export const popularProducts = [
