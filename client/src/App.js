@@ -7,9 +7,11 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import Success from "./components/Success";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
       <Switch>
@@ -24,6 +26,9 @@ const App = () => {
         </Route>
         <Route path="/E-commerce-app/cart">
           <Cart />
+        </Route>
+        <Route path="/E-commerce-app/success">
+          <Success />
         </Route>
         <Route path="/E-commerce-app/login">
           {user ? <Redirect to="/E-commerce-app" /> : <Login />}
