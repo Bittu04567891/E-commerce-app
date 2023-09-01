@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { userRequest } from "../../requestMethods";
+import Footer from "../../components/Footer";
 
 export default function Product() {
   const location = useLocation();
@@ -115,6 +116,7 @@ export default function Product() {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

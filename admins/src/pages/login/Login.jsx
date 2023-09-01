@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/apiCalls";
+import Footer from "../../components/Footer";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -36,6 +37,7 @@ const Login = () => {
       <button style={{ padding: 10, width: 100 }} onChange={handleClick}>
         Login
       </button>
+      <Footer />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../redux/apiCalls";
+import Footer from "../../components/Footer";
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -73,6 +74,7 @@ export default function ProductList() {
         checkboxSelection
         disableVirtualization
       />
+      <Footer />
     </div>
   );
 }

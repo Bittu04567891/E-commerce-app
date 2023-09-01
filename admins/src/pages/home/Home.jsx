@@ -6,6 +6,8 @@ import "./home.css";
 import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const [userStats, setUsersStats] = useState([]);
@@ -54,6 +56,7 @@ export default function Home() {
         <WidgetSm />
         <WidgetLg />
       </div>
+      <Footer />
     </div>
   );
 }

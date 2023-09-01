@@ -5,6 +5,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Footer from "../../components/Footer";
 
 export default function UserList() {
   const [data, setData] = useState(userRows);
@@ -68,6 +69,7 @@ export default function UserList() {
         pageSize={8}
         checkboxSelection
       />
+      <Footer />
     </div>
   );
 }

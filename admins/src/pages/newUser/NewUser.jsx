@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import "./newUser.css";
 
 export default function NewUser() {
@@ -49,6 +50,7 @@ export default function NewUser() {
         </div>
         <button className="newUserButton">Create</button>
       </form>
+      <Footer />
     </div>
   );
 }

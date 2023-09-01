@@ -8,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./user.css";
+import Footer from "../../components/Footer";
 
 export default function User() {
   return (
@@ -118,6 +119,7 @@ export default function User() {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
