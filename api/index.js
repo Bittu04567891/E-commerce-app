@@ -17,20 +17,13 @@ app.get("/", (req, res) => {
   app.use(express.static(path.resolve(__dirname, "client", "build")));
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
+
 mongoose
-  .connect(
-    "mongodb+srv://sultanbittu775:Bittu@e-com.fca2vno.mongodb.net/?retryWrites=true&w=majority&appName=E-com"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("DB connection successful");
   })
   .catch((err) => console.log(err));
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => {
-//     console.log("DB connection successful");
-//   })
-//   .catch((err) => console.log(err));
 
 app.use(cors());
 app.use(express.json());
