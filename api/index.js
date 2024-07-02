@@ -11,7 +11,12 @@ const stripeRoute = require("./routes/stripe");
 const cors = require("cors");
 
 dotenv.config();
+const path = require("path");
 
+app.get("/", (req, res) => {
+  app.use(express.static(path.resolve(__dirname, "client", "build")));
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {

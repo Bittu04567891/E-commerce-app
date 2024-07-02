@@ -86,10 +86,9 @@ const Footer = () => {
       <Left>
         <Logo>PrismCart</Logo>
         <Desc>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-          possimus! Quibusdam nesciunt itaque assumenda earum modi corrupti vel
-          nobis sunt facere vitae rerum fugit, aperiam perspiciatis eligendi
-          sapiente unde. Labore?
+          PrismCart is an e-commerce platform offering a wide range of products
+          with an intuitive interface, ensuring a seamless shopping experience
+          for users.
         </Desc>
         <SocialContainer>
           <SocialIcon color="3B5999">

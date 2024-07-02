@@ -8,11 +8,19 @@ const {
 
 // CREATE
 router.post("/", verifyToken, async (req, res) => {
-  const newCart = new Cart(req.body);
-
+  const { userId, products, quantity, total } = req.body;
   try {
-    const savedCart = await newCart.save();
-    res.status(200).json(savedCart);
+    let cart = await Cart.findOne({ userId });
+    if (cart) {
+      cart.products = products;
+      cart.quantity = quantity;
+      cart.total = total;
+      await cart.save();
+    } else {
+      cart = new Cart({ userId, products, quantity, total });
+      await cart.save();
+    }
+    res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -48,7 +56,11 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
-    res.status(200).json(cart);
+    if (cart) {
+      res.status(200).json(cart);
+    } else {
+      res.status(404).json("Cart not found");
+    }
   } catch (err) {
     res.status(500).json(err);
   }

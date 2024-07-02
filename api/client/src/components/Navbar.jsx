@@ -8,6 +8,8 @@ import { Badge } from "@mui/material";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../redux/userRedux";
+import { fetchCart } from "../redux/cartRedux";
 
 const Container = styled.div`
   height: 60px;
@@ -80,15 +82,16 @@ const Navbar = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setLogin(user.currentUser ? true : false); // Update login state based on user existence
-    console.log("user changed", login);
-  }, [user]);
+    if (user.currentUser) {
+      dispatch(fetchCart(user.currentUser._id));
+      setLogin(user ? false : true);
+    }
+  }, [user, dispatch]);
 
   const handleLogOut = () => {
-    dispatch(logOut()); // Dispatch logOut action to clear user state
-    dispatch(clearCart()); // Dispatch clearCart action to clear cart state
-
-    history.push("/"); // Redirect to home page after logout
+    dispatch(logoutUser());
+    setLogin(true);
+    history.push("/");
   };
 
   return (
@@ -105,7 +108,7 @@ const Navbar = () => {
           <Logo>PrismCart</Logo>
         </Center>
         <Right>
-          {login ? (
+          {!login ? (
             <MenuItem onClick={handleLogOut}>LOGOUT</MenuItem>
           ) : (
             <>

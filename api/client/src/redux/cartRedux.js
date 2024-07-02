@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { userRequest } from "../requestMethods";
 
 const cartSlice = createSlice({
   name: "cart",
@@ -64,6 +65,11 @@ const cartSlice = createSlice({
         existingProduct.quantity = newQuantity;
       }
     },
+    setCart: (state, action) => {
+      state.products = action.payload.products;
+      state.quantity = action.payload.quantity;
+      state.total = action.payload.total;
+    },
     clearCart: (state) => {
       // Clear all products from the cart
       state.products = [];
@@ -73,6 +79,27 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, removeProduct, updateProductQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  setCart,
+  addProduct,
+  removeProduct,
+  updateProductQuantity,
+  clearCart,
+} = cartSlice.actions;
+export const fetchCart = (userId) => async (dispatch) => {
+  try {
+    const res = await userRequest.get(`/carts/find/${userId}`);
+    dispatch(setCart(res.data));
+  } catch (err) {
+    console.error("Failed to fetch cart:", err);
+  }
+};
+
+export const saveCart = (userId, cart) => async () => {
+  try {
+    await userRequest.post("/carts/", { userId, ...cart });
+  } catch (err) {
+    console.error("Failed to save cart:", err);
+  }
+};
 export default cartSlice.reducer;
