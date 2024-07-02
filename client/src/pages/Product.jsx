@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
 import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
 import { Add, CurrencyRupee, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
@@ -29,7 +27,7 @@ const Image = styled.img`
   margin-left: 50px;
   ${mobile({
     height: "40vh",
-  })}/* mix-blend-mode: darken; */
+  })}
 `;
 const InfoContainer = styled.div`
   flex: 1;
@@ -115,9 +113,9 @@ const Button = styled.button`
 
 const Product = () => {
   const location = useLocation();
-  const id = location.pathname.split("/")[3];
+  const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
@@ -125,13 +123,14 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get("/products/find/" + id);
-
+        const res = await publicRequest.get(`/products/find/${id}`);
         setProduct(res.data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        // Handle error state or display a message to the user
       }
     };
+
     getProduct();
   }, [id]);
 
@@ -142,12 +141,25 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
+
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    if (product && product._id && product.price && size && color) {
+      dispatch(
+        addProduct({
+          product,
+          quantity,
+          size,
+          color,
+        })
+      );
+    } else {
+      console.error("Product data is incomplete or undefined.");
+      // Handle or log an error, display a message to the user, etc.
+    }
   };
+
   return (
     <Container>
-      <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
@@ -187,7 +199,6 @@ const Product = () => {
         </InfoContainer>
       </Wrapper>
       <Newsletter />
-      <Footer />
     </Container>
   );
 };

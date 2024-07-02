@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     currentUser: null,
+    // token: null,
     isFetching: false,
     error: false,
   },
@@ -19,8 +20,15 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    logOut: (state) => {
+      state.isFetching = false;
+      state.currentUser = null;
+      state.error = false;
+    },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logOut } =
+  userSlice.actions;
+export const selectUserId = (state) => state.user.currentUser?._id;
 export default userSlice.reducer;

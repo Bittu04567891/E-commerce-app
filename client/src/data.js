@@ -25,21 +25,39 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.unsplash.com/photo-1563630423918-b58f07336ac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bWVuJTIwc2hpcnR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1000&q=60",
-    title: "SHIRT STYLE!",
-    cat: "man",
+    img: "https://images.unsplash.com/photo-1610189025857-f42fe6e8dd91?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2FyZWV8ZW58MHx8MHx8fDA%3D",
+    title: "SAREE",
+    cat: "saree",
   },
   {
     id: 2,
-    img: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d29tYW4lMjBiZWF1dGlmdWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-    title: "LOUNGE WEAR LOVE",
-    cat: "women",
+    img: "https://images.unsplash.com/photo-1557531365-e8b22d93dbd0?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "WATCHES",
+    cat: "watches",
   },
   {
     id: 3,
     img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amFja2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=1000&q=60",
     title: "LIGHT JACKETS",
     cat: "jacket",
+  },
+  {
+    id: 4,
+    img: "https://images.unsplash.com/photo-1530845645774-eed359045642?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJhYnklMjBjbG90aGluZ3xlbnwwfHwwfHx8MA%3D%3D",
+    title: "KIDS",
+    cat: "kids",
+  },
+  {
+    id: 5,
+    img: "https://images.unsplash.com/photo-1691480250099-a63081ecfcb8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHB1cnNlfGVufDB8fDB8fHww",
+    title: "PURSE",
+    cat: "purse",
+  },
+  {
+    id: 6,
+    img: "https://images.unsplash.com/photo-1548778943-5bbeeb1ba6c1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c2hpcnR8ZW58MHx8MHx8fDA%3D",
+    title: "SHIRTS",
+    cat: "shirt",
   },
 ];
 export const popularProducts = [
@@ -49,46 +67,46 @@ export const popularProducts = [
   },
   {
     id: 2,
-    img: "https://4.imimg.com/data4/QN/KD/MY-4906124/img_4555-500x500.jpg",
+    img: "https://m.media-amazon.com/images/I/91PE5UW9LCL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 3,
-    img: "https://m.media-amazon.com/images/I/71kkSLQhcGL._UY879_.jpg",
+    img: "https://m.media-amazon.com/images/I/71pl6qPr84L._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 4,
-    img: "https://m.media-amazon.com/images/I/41mz4LR-mEL._AC_SR160,200_.jpg",
+    img: "https://m.media-amazon.com/images/I/71+gJlIEqkL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 5,
-    img: "https://m.media-amazon.com/images/I/81wqp2ohC9L._UY741_.jpg",
+    img: "https://m.media-amazon.com/images/I/819rIWiTo8L._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 6,
-    img: "https://m.media-amazon.com/images/I/71vF2ujNShL._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/51-Ad0zLFLL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 7,
-    img: "https://m.media-amazon.com/images/I/61VjQIPq-JL._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/81Fih1Bai-L._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 8,
-    img: "https://m.media-amazon.com/images/I/31TKmVZtYOS._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/915NPMLKRDL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 9,
-    img: "https://m.media-amazon.com/images/I/71dDZ0SGCjL._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/61WL6qMBGmL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 10,
-    img: "https://m.media-amazon.com/images/I/51Q77GgFlrL._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/510bAxmzH9L._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 11,
-    img: "https://m.media-amazon.com/images/I/71NxNzhlTWL._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/512XOGQUbaL._AC_UL480_FMwebp_QL65_.jpg",
   },
   {
     id: 12,
-    img: "https://m.media-amazon.com/images/I/81x73tdqT2L._AC_UL600_FMwebp_QL65_.jpg",
+    img: "https://m.media-amazon.com/images/I/71GHcygqO5L._AC_UL480_FMwebp_QL65_.jpg",
   },
 ];

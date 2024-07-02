@@ -1,44 +1,60 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Success from "./components/Success";
 import { useSelector } from "react-redux";
-
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import ScrollToTop from "./scrollToTop";
+import { createGlobalStyle } from "styled-components";
 const App = () => {
-  // const user = useSelector((state) => state.user.currentUser);
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
+  const GlobalStyles = createGlobalStyle`
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
   return (
-    <Switch>
-      <Route exact path="/E-commerce-app/">
-        <Home />
-      </Route>
-      <Route path="/E-commerce-app/products/:category">
-        <ProductList />
-      </Route>
-      <Route path="/E-commerce-app/product/:id">
-        <Product />
-      </Route>
-      <Route path="/E-commerce-app/cart">
-        <Cart />
-      </Route>
-      <Route path="/E-commerce-app/success">
-        <Success />
-      </Route>
-      <Route path="/E-commerce-app/login">
-        {user ? <Redirect to="/E-commerce-app" /> : <Login />}
-        <Login />
-      </Route>
-      <Route path="/E-commerce-app/register">
-        {user ? <Redirect to="/E-commerce-app" /> : <Register />}
-        <Register />
-      </Route>
-    </Switch>
+    <Router>
+      <GlobalStyles />
+      <ScrollToTop />
+      <Navbar />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/products/:category">
+          <ProductList />
+        </Route>
+        <Route path="/product/:id">
+          <Product />
+        </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
+        <Route path="/success">
+          <Success />
+        </Route>
+
+        <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/register">
+          {user ? <Redirect to="/" /> : <Register />}
+        </Route>
+      </Switch>
+      <Footer />
+    </Router>
   );
 };
+
 export default App;

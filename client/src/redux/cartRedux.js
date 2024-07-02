@@ -3,18 +3,76 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    products: [],
-    quantity: 0,
-    total: 0,
+    products: [], // Array to store products in the cart
+    quantity: 0, // Total quantity of items in the cart
+    total: 0, // Total price of items in the cart
   },
   reducers: {
     addProduct: (state, action) => {
-      state.quantity += 1;
-      state.products.push(action.payload);
-      state.total += action.payload.price * action.payload.quantity;
+      const { product, quantity, size, color } = action.payload;
+
+      if (!product || !product.price || !size || !color) {
+        console.error("Product, price, size, or color is undefined");
+        return;
+      }
+
+      const existingProductIndex = state.products.findIndex(
+        (p) => p._id === product._id && p.size === size && p.color === color
+      );
+
+      if (existingProductIndex !== -1) {
+        // Product already exists in the cart, update quantity and total
+        state.products[existingProductIndex].quantity += quantity;
+      } else {
+        // Add new product to the cart
+        state.products.push({ ...product, quantity, size, color });
+      }
+
+      // Update total quantity and total price
+      state.quantity += quantity;
+      state.total += product.price * quantity;
+    },
+    removeProduct: (state, action) => {
+      const { productId, size, color } = action.payload;
+
+      const existingProductIndex = state.products.findIndex(
+        (p) => p._id === productId
+      );
+
+      if (existingProductIndex !== -1) {
+        // Decrease quantity and update total price
+        const removedProduct = state.products[existingProductIndex];
+        state.quantity -= removedProduct.quantity;
+        state.total -= removedProduct.price * removedProduct.quantity;
+
+        // Remove product from the cart
+        state.products.splice(existingProductIndex, 1);
+      }
+    },
+    updateProductQuantity: (state, action) => {
+      const { productId, size, color, newQuantity } = action.payload;
+      const existingProductIndex = state.products.findIndex(
+        (p) => p._id === productId
+      );
+
+      if (existingProductIndex !== -1) {
+        // Update quantity and total price based on new quantity
+        const existingProduct = state.products[existingProductIndex];
+        const difference = newQuantity - existingProduct.quantity;
+        state.quantity += difference;
+        state.total += difference * existingProduct.price;
+        existingProduct.quantity = newQuantity;
+      }
+    },
+    clearCart: (state) => {
+      // Clear all products from the cart
+      state.products = [];
+      state.quantity = 0;
+      state.total = 0;
     },
   },
 });
 
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, removeProduct, updateProductQuantity, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

@@ -3,6 +3,7 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/apiCalls";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -13,7 +14,6 @@ const Container = styled.div`
     ),
     url("https://images.unsplash.com/photo-1501349800519-48093d60bde0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80")
       top no-repeat;
-  /* background-size: cover; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,6 +65,7 @@ const Error = styled.span`
 `;
 
 const Login = () => {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -72,7 +73,11 @@ const Login = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { username, password }).then((success) => {
+      if (success) {
+        history.push("/");
+      }
+    });
   };
 
   return (

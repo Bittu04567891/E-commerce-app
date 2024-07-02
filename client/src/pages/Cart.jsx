@@ -1,25 +1,24 @@
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { Add, CurrencyRupee, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import StripeCheckout from "react-stripe-checkout";
+import {
+  removeProduct,
+  updateProductQuantity,
+  clearCart,
+} from "../redux/cartRedux";
 import { userRequest } from "../requestMethods";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const KEY = process.env.REACT_APP_STRIPE;
-// const KEY =
-// "pk_test_51NiLjsSDMdaykBrKxhLZdeoFuf0PoMf2NW4jbvKqDsRwbz6ZxCcY0Lv8187jRrB64q5cKWuyjGYyAMgKhPJwRS4p00VcNrvPwr";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 20px;
-  ${mobile({
-    padding: "10px",
-  })}
+  ${mobile({ padding: "10px" })}
 `;
 const Title = styled.h1`
   font-weight: 300;
@@ -40,11 +39,8 @@ const TopButton = styled.button`
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
 `;
-
 const TopTexts = styled.div`
-  ${mobile({
-    display: "none",
-  })}
+  ${mobile({ display: "none" })}
 `;
 const TopText = styled.span`
   text-decoration: underline;
@@ -54,20 +50,15 @@ const TopText = styled.span`
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({
-    flexDirection: "column",
-  })}
+  ${mobile({ flexDirection: "column" })}
 `;
 const Info = styled.div`
   flex: 3;
 `;
-
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({
-    flexDirection: "column",
-  })}
+  ${mobile({ flexDirection: "column" })}
 `;
 const ProductDetail = styled.div`
   flex: 2;
@@ -106,16 +97,12 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
   font-size: 24px;
   margin: 5px;
-  ${mobile({
-    margin: "5px 15px",
-  })}
+  ${mobile({ margin: "5px 15px" })}
 `;
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  ${mobile({
-    marginBottom: "20px",
-  })}
+  ${mobile({ marginBottom: "20px" })}
 `;
 const Hr = styled.hr`
   background-color: #eee;
@@ -147,10 +134,12 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const [stripeToken, setStripeToken] = useState(null);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const [stripeToken, setStripeToken] = useState(null);
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -164,61 +153,101 @@ const Cart = () => {
           amount: cart.total * 100,
         });
         history.push("/success", { data: res.data });
-      } catch {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
 
+  const handleRemoveProduct = (productId, size) => {
+    dispatch(removeProduct({ productId, size }));
+  };
+
+  const handleUpdateQuantity = (productId, size, newQuantity) => {
+    dispatch(updateProductQuantity({ productId, size, newQuantity }));
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   return (
     <Container>
-      <Navbar />
       <Announcement />
+
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/">
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cart.quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type="filled" onClick={handleClearCart}>
+            CLEAR SHOPPING BAG
+          </TopButton>
         </Top>
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
-                  <Image src={product.img} />
+                  <Image src={product.img} alt={product.title} />
                   <Details>
                     <ProductName>
-                      <b>Product:</b>
-                      {product.title}
+                      <b>Product:</b> {product.title}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b>
-                      {product._id}
+                      <b>ID:</b> {product._id}
                     </ProductId>
                     <ProductColor color={product.color} />
                     <ProductSize>
-                      <b>Size:</b>
-                      {product.size}
+                      <b>Size:</b> {product.size}
                     </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add />
+                    <Add
+                      onClick={() =>
+                        handleUpdateQuantity(
+                          product._id,
+                          product.size,
+                          product.quantity + 1
+                        )
+                      }
+                    />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                    <Remove
+                      onClick={() =>
+                        handleUpdateQuantity(
+                          product._id,
+                          product.size,
+                          product.quantity - 1
+                        )
+                      }
+                    />
                   </ProductAmountContainer>
                   <ProductPrice>
                     <CurrencyRupee style={{ fontSize: "20px" }} />
-                    {product.price * product.quantity}
+                    {product &&
+                      product.price &&
+                      product.quantity &&
+                      product.price * product.quantity}
                   </ProductPrice>
+                  <Button
+                    onClick={() =>
+                      handleRemoveProduct(product._id, product.size)
+                    }
+                  >
+                    REMOVE
+                  </Button>
                 </PriceDetail>
               </Product>
             ))}
-            ;
             <Hr />
           </Info>
           <Summary>
@@ -234,7 +263,7 @@ const Cart = () => {
               <SummaryItemText>Estimated Shipping</SummaryItemText>
               <SummaryItemText>
                 <CurrencyRupee style={{ fontSize: "20px" }} />
-                900
+                250
               </SummaryItemText>
             </SummaryItem>
             <SummaryItem>
@@ -248,7 +277,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemText>
                 <CurrencyRupee style={{ fontSize: "20px" }} />
-                {cart.total}
+                {cart.total + 150}
               </SummaryItemText>
             </SummaryItem>
             <StripeCheckout
@@ -266,7 +295,6 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };
