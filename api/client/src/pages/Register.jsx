@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import axios from "axios"; // Make sure to install axios if you haven't already
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
   width: 100vw;
@@ -78,10 +78,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData
-      );
+      const response = await publicRequest.post("/auth/register", formData);
       console.log("Registration successful:", response.data);
       history.push("/login"); // Redirect to login page
     } catch (error) {
